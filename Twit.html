@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<HEAD>
+<TITLE>Twit</TITLE>
+
+<SCRIPT>
+
+function compute()
+{
+   var f = document.Twit;  // This is the form we'll we working with.
+   var sm = f.msg.value;
+   var dm = "";
+   var ns = 0;
+   var slen = sm.length;
+   while (ns + 277 < slen) { // Twitter msg is 280 chars max
+      var max = ns + 277;
+      while (max > ns && sm[max] != '\n' && sm[max] != ' ') max--;
+      if (max == ns) {
+         max = ns + 277;
+      }
+      while (ns < max) {
+         if (sm[ns] == '|') {
+            ns++;
+            break;
+         }
+         dm += sm[ns];
+         ns++;
+      }
+      if (sm[ns-1] != '.' && sm[ns-1] != '!')
+         dm += "...";
+      if (sm[ns] == ' ') ns++;
+      dm += "\n\n";
+   }
+   while (ns < slen) {
+      dm += sm[ns];
+      ns++;
+   }
+   f.msgout.value = dm;
+}
+
+</SCRIPT>
+
+</HEAD>
+
+<H1>Twitter msg break formatter</H1>
+
+<FORM NAME="Twit">
+  <textarea NAME="msg"rows="50" cols="80"></textarea>
+  <textarea NAME="msgout" rows="50" cols="80" maxlength="4000"></textarea>
+  <button TYPE="button" NAME="reformat" onclick="compute()">Reformat</button>
+</FORM>
+
+</BODY>
+</html>
