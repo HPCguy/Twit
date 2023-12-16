@@ -13,6 +13,7 @@ function compute()
    var ns = 0;
    var slen = sm.length;
    while (ns + 277 < slen) { // Twitter msg is 280 chars max
+      var off = 1;
       var max = ns + 277;
       while (max > ns && sm[max] != '\n' && sm[max] != ' ') max--;
       if (max == ns) {
@@ -20,13 +21,13 @@ function compute()
       }
       while (ns < max) {
          if (sm[ns] == '|') {
-            ns++;
+            ns++; off = 2;
             break;
          }
          dm += sm[ns];
          ns++;
       }
-      if (sm[ns-1] != '.' && sm[ns-1] != '!')
+      if (sm[ns-off] != '.' && sm[ns-off] != '!')
          dm += "...";
       if (sm[ns] == ' ') ns++;
       dm += "\n\n";
